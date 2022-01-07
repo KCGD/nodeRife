@@ -19,6 +19,7 @@ var cliProgressUpdateLoop = null;
 const input = process.argv[2];
 if(typeof input === "undefined") {
     console.error("[ERROR]: no input!");
+    console.log("Usage: [video file]");
     process.exit(1);
 } else {
 
