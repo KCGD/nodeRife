@@ -5,6 +5,7 @@
   "main": "interpolate.js",
   "dependencies": {
     "cli-progress": "^3.9.1",
+    "ffmpeg-static": "^4.4.1",
     "fs": "0.0.1-security",
     "path": "^0.12.7",
     "rimraf": "^3.0.2"

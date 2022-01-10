@@ -8,6 +8,7 @@ const path = require('path');
 const fs = require('fs');
 const rimraf = require('rimraf');
 const progress = require('cli-progress');
+const ffmpegPath = require('ffmpeg-static');
 
 //globals
 var framerate = 0;
@@ -24,7 +25,7 @@ if(typeof input === "undefined") {
 } else {
 
     console.log("[INFO]: getting video info for [" + input + "]");
-    let _c = require('child_process').exec(`ffmpeg -i ${input} 2>&1 | sed -n "s/.*, \\(.*\\) fp.*/\\1/p"`, (err, stdout) => {
+    let _c = require('child_process').exec(`${ffmpegPath} -i ${input} 2>&1 | sed -n "s/.*, \\(.*\\) fp.*/\\1/p"`, (err, stdout) => {
 
         framerate = stdout;
         console.log(`[INFO]: input video is ${framerate.replace("/\n/g", "").replace("/\r/g", "")}fps, set to interpolate to ${framerate*2}fps`);
@@ -64,7 +65,7 @@ function _cleanOutputs(){
 //audio extraction
 function _extractAudio(){
     console.log(`[INFO]: extracting audio to audio.m4a`);
-    let _c = require('child_process').exec(`ffmpeg -y -i ${input} -vn -acodec copy audio.m4a`);
+    let _c = require('child_process').exec(`${ffmpegPath} -y -i ${input} -vn -acodec copy audio.m4a`);
 
     _c.stdout.on('data', (data) => {
         console.log(`[FFMPEG]: ${data.toString()}`);
@@ -83,7 +84,7 @@ function _extractAudio(){
 //frame extraction
 function _extractFrames() {
     console.log(`[INFO]: extracting frames from ${input}`);
-    let _c = require('child_process').exec(`ffmpeg -i ${input} input_frames/frame_%08d.png`);
+    let _c = require('child_process').exec(`${ffmpegPath} -i ${input} input_frames/frame_%08d.png`);
 
     _c.stdout.on('data', (data) => {
         console.log(`[FFMPEG]: ${data.toString()}`);
@@ -102,7 +103,7 @@ function _extractFrames() {
 //interpolation
 function _interpolate() {
     console.log(`[INFO]: Starting interpolation! (this may take a while)`);
-    let _c = require('child_process').spawn(`./rife-ncnn-vulkan`, ["-i", "input_frames", "-o", "output_frames"], {cwd: process.cwd()});
+    let _c = require('child_process').spawn(`./rife-ncnn-vulkan/build/rife-ncnn-vulkan`, ["-i", "input_frames", "-o", "output_frames"], {cwd: process.cwd()});
 
     //get frame stats for progress bar
     inputFrameLength = fs.readdirSync(path.join(process.cwd(), "./input_frames")).length;
@@ -142,10 +143,10 @@ function _toVideo() {
 
     //check if audio file exists (it might not if video has no audio)
     if(fs.existsSync(path.join(process.cwd(), "./audio.m4a"))){
-        _c = require('child_process').exec(`ffmpeg -y -framerate ${Math.floor(framerate * 2)} -i output_frames/%08d.png -i audio.m4a -c:a copy -crf 20 -c:v libx264 -pix_fmt yuv420p output.mp4`);
+        _c = require('child_process').exec(`${ffmpegPath} -y -framerate ${Math.floor(framerate * 2)} -i output_frames/%08d.png -i audio.m4a -c:a copy -crf 20 -c:v libx264 -pix_fmt yuv420p output.mp4`);
     } else {
         console.log(`[WARN]: No audio file found! Output video wont have an audio track!`);
-        _c = require('child_process').exec(`ffmpeg -y -framerate ${Math.floor(framerate * 2)} -i output_frames/%08d.png -c:a copy -crf 20 -c:v libx264 -pix_fmt yuv420p output.mp4`);
+        _c = require('child_process').exec(`${ffmpegPath} -y -framerate ${Math.floor(framerate * 2)} -i output_frames/%08d.png -c:a copy -crf 20 -c:v libx264 -pix_fmt yuv420p output.mp4`);
     }
 
     _c.stdout.on('data', (data) => {
