@@ -4,10 +4,10 @@ if [ "$1" = "--build" ]; then
 
     #run build
     npm i
-    #git clone https://github.com/nihui/rife-ncnn-vulkan.git
+    git clone https://github.com/nihui/rife-ncnn-vulkan.git
     cd rife-ncnn-vulkan
-    #git submodule update --init --recursive
-    #mkdir build
+    git submodule update --init --recursive
+    mkdir build
     cd build
     cmake ../src
     cmake --build . -j$(nproc)
