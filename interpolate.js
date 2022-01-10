@@ -103,7 +103,7 @@ function _extractFrames() {
 //interpolation
 function _interpolate() {
     console.log(`[INFO]: Starting interpolation! (this may take a while)`);
-    let _c = require('child_process').spawn(`./rife-ncnn-vulkan/build/rife-ncnn-vulkan`, ["-i", "input_frames", "-o", "output_frames"], {cwd: process.cwd()});
+    let _c = require('child_process').spawn(`./rife-ncnn-vulkan/build/rife-ncnn-vulkan`, ["-i", path.join(process.cwd(), "./input_frames"), "-o", path.join(process.cwd(), "./input_frames")], {cwd: path.join(process.cwd()), stdio: "inherit"});
 
     //get frame stats for progress bar
     inputFrameLength = fs.readdirSync(path.join(process.cwd(), "./input_frames")).length;
