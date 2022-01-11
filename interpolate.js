@@ -16,6 +16,35 @@ var inputFrameLength = 0;
 var cliProgressBar = null;
 var cliProgressUpdateLoop = null;
 
+let usrArgs = [];
+
+//register passthrough arguments
+for(var i = 0; i < process.argv.length; i++) {
+    switch(process.argv[i]) {
+        case "-model":
+            usrArgs.push("-m");
+            usrArgs.push(process.argv[i + 1]);
+        break;
+
+        case "-tta":
+            usrArgs.push("-x");
+        break;
+
+        case "-uhd":
+            usrArgs.push("-u");
+        break;
+
+        case "-gpu":
+            usrArgs.push("-g");
+            usrArgs.push(process.argv[i + 1]);
+        break;
+
+        default:
+            //none
+    }
+}
+
+
 //verify args
 const input = process.argv[2];
 if(typeof input === "undefined") {
@@ -36,6 +65,7 @@ if(typeof input === "undefined") {
 //delete temporary folders
 function _cleanOutputs(){
     //remove input_frames
+    console.log(usrArgs);
     console.log('[INFO]: clearing input and output directories...');
 
     try{
@@ -126,7 +156,7 @@ function _interpolate() {
     //make update loop
     cliProgressUpdateLoop = setInterval(function() {
         cliProgressBar.update(fs.readdirSync(path.join(process.cwd(), "./output_frames")).length);
-    }, 500);
+    }, 200);
 
     _c.on('error', (e) => {
         console.error(`[ERROR]: FATAL: Error in interpolation!\n${e}`);
