@@ -11,6 +11,8 @@ if [ "$1" = "--build" ]; then
     cd build
     cmake ../src
     cmake --build . -j$(nproc)
+    echo copying modules
+    cp -rv ../models/* ./
     echo done
 else
 
