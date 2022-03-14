@@ -34,6 +34,10 @@ node interpolate.js [video to interpolate]
     -tta ==> enables TTA
     -uhd ==> enables UHD mode for high resolution videos
     -gpu [GPU ID] ==> enables GPU processing, and specifying which GPU to use
+    -accel [loaders:processors:savers] ==> enables multithreading for different operations
+        loaders - threads to load and decode images
+        processors - threads to interpolate the images
+        savers - threads to encode and save the images
 ```
 
 # License
