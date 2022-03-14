@@ -1,6 +1,6 @@
 # NodeRife
 
-NodeRife is a commandline tool written in node.js to automate the use of ncnn-rife-vulkan!
+NodeRife is a commandline tool written in node.js to automate the use of rife-ncnn-vulkan!
 
 ## Setup
 
