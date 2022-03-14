@@ -39,6 +39,11 @@ for(var i = 0; i < process.argv.length; i++) {
             usrArgs.push(process.argv[i + 1]);
         break;
 
+        case "-accel":
+            usrArgs.push("-j");
+            usrArgs.push(process.argv[i + 1]);
+        break;
+
         default:
             //none
     }
@@ -133,10 +138,12 @@ function _extractFrames() {
 //interpolation
 function _interpolate() {
     console.log(`[INFO]: Starting interpolation! (this may take a while)`);
+    console.log(`==> ./rife-ncnn-vulkan/build/rife-ncnn-vulkan ${["-i", path.join(process.cwd(), "./input_frames"), "-o", path.join(process.cwd(), "./output_frames")].concat(usrArgs).join(" ")}`);
+
     let _c = require('child_process').spawn(`./rife-ncnn-vulkan/build/rife-ncnn-vulkan`, [
         "-i", path.join(process.cwd(), "./input_frames"), 
         "-o", path.join(process.cwd(), "./output_frames")
-    ], {
+    ].concat(usrArgs), {
         
     });
 
