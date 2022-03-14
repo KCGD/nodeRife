@@ -36,3 +36,6 @@ node interpolate.js [video to interpolate]
     -gpu [GPU ID] ==> enables GPU processing, and specifying which GPU to use
 ```
 
+# License
+[Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+ 
