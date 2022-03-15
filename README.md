@@ -38,6 +38,7 @@ node interpolate.js [video to interpolate]
         loaders - threads to load and decode images
         processors - threads to interpolate the images
         savers - threads to encode and save the images
+    -opt => a preset for the -accel option, should give a slight performance boost
 ```
 
 # License
