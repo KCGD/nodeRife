@@ -45,7 +45,7 @@ for(var i = 0; i < process.argv.length; i++) {
         break;
 
         case "-opt":
-            ["-j", "4:4:4"].forEach(arg => {
+            ["-j", "6:4:6"].forEach(arg => {
                 usrArgs.push(arg);
             })
         break;
