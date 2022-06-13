@@ -50,6 +50,12 @@ for(var i = 0; i < process.argv.length; i++) {
             })
         break;
 
+
+        case "--help":
+            console.log(fs.readFileSync("./assets/helpFile").toString());
+            process.exit(0);
+        break;
+
         default:
             //none
     }

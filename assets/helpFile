@@ -1,0 +1,12 @@
+node interpolate.js [video file] [other arguments]
+    -model (model name - string): the name of the model to use
+
+    -tta (none): whether to use tta or not
+
+    -uhd (none): whether to enable UHD mode (for high res videos)
+
+    -gpu (gpu number - number): the GPU to use
+
+    -accel (decode:process:encode - number:number:number) - enables and specifies multithreading
+
+    -opt (none): a preset for -accel
