@@ -112,7 +112,7 @@ function _cleanOutputs(){
 //audio extraction
 function _extractAudio(){
     console.log(`[INFO]: extracting audio to audio.m4a`);
-    let _c = require('child_process').exec(`${ffmpegPath} -y -i ${input} -vn -acodec copy audio.m4a`);
+    let _c = require('child_process').exec(`${ffmpegPath} -y -i ${input} audio.m4a`);
 
     _c.stdout.on('data', (data) => {
         console.log(`[FFMPEG]: ${data.toString()}`);
