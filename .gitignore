@@ -1,2 +1,2 @@
-./node_modules
-./rife-ncnn-vulkan
+node_modules/
+rife-ncnn-vulkan/
